@@ -7,13 +7,13 @@ var active_line
 var draw_material
 var erase_material
 
+# operating modes
 enum mode {
-	draw,
+	draw = 0,
 	erase,
 	undo,
-	count = 3,
+	count,
 }
-
 var current_mode = mode.draw
 
 func _ready():
@@ -33,11 +33,9 @@ func _input(event):
 				active_line = Line2D.new()
 				# alternating between draw/erase mode
 				if current_mode == mode.draw:
-					print("Draw mode")
 					active_line.default_color = Color(randf(), randf(), randf(), 1)
 					active_line.material = draw_material
 				elif current_mode == mode.erase:
-					print("Eraser mode")
 					active_line.default_color = Color(0, 0, 0, 1)
 					active_line.material = erase_material
 				active_line.position = event.position
@@ -58,13 +56,12 @@ func _input(event):
 func undo_last():
 	var count = $ViewportContainer/Viewport.get_child_count()
 	if count > 0:
-		print("Undo: current stroke count:", count)
+		print("Undo. Current stroke count:", count)
 		$ViewportContainer/Viewport.get_child(count - 1).queue_free()
 	pass
 
 func switch_mode():
 	current_mode = (current_mode+1) % mode.count
-	print("Switching mode to:", current_mode)
 	match(current_mode):
 		mode.draw:
 			$Label.text = "Draw Mode. Right click to switch"
@@ -72,3 +69,4 @@ func switch_mode():
 			$Label.text = "Eraser Mode. Right click to switch"
 		mode.undo:
 			$Label.text = "Undo Mode. Left click to Undo, Right click to switch"
+	pass
