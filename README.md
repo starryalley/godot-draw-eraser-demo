@@ -3,6 +3,8 @@
 
 This is a simple demo godot project to implement draw/eraser/undo tool on top of a background image (TextureRect), where you can erase pixels without affecting the background TextureRect.
 
+![Screenshot](screenshots/screenshot.png)
+
 # Why
 
 When I try to implement draw tool using Line2D objects, it is not very obvious how to implement eraser tool to clear part of the pixels drawn. Simply setting another Line2D with color alpha = 0 doesn't work. See [discussion of this godot issue](https://github.com/godotengine/godot/issues/10255). 
